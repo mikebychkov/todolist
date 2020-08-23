@@ -1,5 +1,6 @@
 package todolist.servlet;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import todolist.model.Item;
 import todolist.store.ItemDB;
@@ -16,11 +17,16 @@ public class ItemListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        System.out.println("ItemListServlet#doGet=========start query=========");
+
         List<Item> list = ItemDB.getItemList();
 
-        JSONObject jo = new JSONObject(list);
+        JSONArray jo = new JSONArray(list);
 
         resp.setContentType("text/json");
+
+        System.out.println("ItemListServlet#doGet=========write query result into response=========");
 
         PrintWriter out = resp.getWriter();
         out.write(jo.toString());

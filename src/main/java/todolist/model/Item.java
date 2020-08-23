@@ -8,13 +8,31 @@ import java.util.GregorianCalendar;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
+    @Column(name="description")
     private String desc;
     private GregorianCalendar created;
     private GregorianCalendar done;
 
     public Item() {
+    }
+
+    public Item(String desc) {
+        this.desc = desc;
+    }
+
+    public Item(Integer id, String desc) {
+        this.id = id;
+        this.desc = desc;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDesc() {

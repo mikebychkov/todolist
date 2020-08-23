@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page import="todolist.model.Item" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,18 +19,18 @@
             <a class="navbar-brand" href="#">TODO List</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="index.jsp">Home</a></li>
+            <li><a href="index.html">Home</a></li>
             <li class="active"><a href="#">New Item</a></li>
         </ul>
     </div>
 </nav>
 
 <div class="container">
-    <form class="form-horizontal" method="post" action="<%=request.getContextPath()%>/edit">
+    <form class="form-horizontal" method="post" action='<%=request.getContextPath()%>/edit?id=${item.id}'>
         <div class="form-group">
             <label class="control-label col-sm-2" for="desc">Description:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="desc" placeholder="Description" name="desc">
+                <input type="text" class="form-control" id="desc" placeholder="Description" name="desc" value="${item.desc}">
             </div>
         </div>
         <div class="form-group">

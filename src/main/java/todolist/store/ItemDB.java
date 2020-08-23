@@ -33,6 +33,15 @@ public class ItemDB {
         return item;
     }
 
+    public static Item saveOrUpdate(Item item) {
+        Session session = sf().openSession();
+        session.beginTransaction();
+        session.saveOrUpdate(item);
+        session.getTransaction().commit();
+        session.close();
+        return item;
+    }
+
     public static Item getItem(int id) {
         Session session = sf().openSession();
         session.beginTransaction();
