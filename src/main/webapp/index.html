@@ -11,10 +11,13 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
 
     <script>
+
+        let ActualItems = false;
+
         function updateItemList() {
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost:8080/todolist/itemlist',
+                url: 'http://localhost:8080/todolist/itemlist?list=' + (ActualItems ? 'actual' : 'all'),
                 dataType: 'json'
             }).done(function(data) {
                 let content = "";
@@ -25,8 +28,8 @@
                     //
                     content += "<td>";
 
-                    content += "<a href='todolist/edit?id=" + d.id + "'>";
-                    if (d.done == null) {
+                    content += "<a href='edit?id=" + d.id + "&check=1'>";
+                    if (d.done == "") {
                         content += "<i class=\"fa fa-square-o\" aria-hidden=\"true\"></i>";
                     } else {
                         content += "<i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i>";
@@ -50,6 +53,11 @@
                 $('#tdata').html(content);
             });
         }
+
+        function updateActualFlag() {
+            ActualItems = document.getElementById("actual0").checked;
+        }
+
         updateItemList();
     </script>
 
@@ -69,6 +77,9 @@
 </nav>
 
 <div class="container">
+    <div class="checkbox">
+        <label><input type="checkbox" name="actual0" id="actual0" onchange="updateActualFlag(); updateItemList()"> Show only actual items</label>
+    </div>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -80,51 +91,6 @@
         </tr>
         </thead>
         <tbody id="tdata">
-        <tr>
-			<td>
-                <a href='edit?id=1'>
-                    <i class="fa fa-square-o" aria-hidden="true"></i>
-                </a>
-            </td>
-            <td>
-                <a href='edit?id=1'>
-                    <i class="fa fa-edit mr-3"></i>
-                </a>
-            </td>
-            <td>Make TODO List app</td>
-            <td>22/08/2020</td>
-            <td></td>
-        </tr>
-        <tr>
-			<td>
-                <a href='edit?id=1'>
-                    <i class="fa fa-check-square-o" aria-hidden="true"></i>
-                </a>
-            </td>
-            <td>
-                <a href='edit?id=1'>
-                    <i class="fa fa-edit mr-3"></i>
-                </a>
-            </td>
-            <td>Call Harry</td>
-            <td>20/08/2020</td>
-            <td>21/08/2020</td>
-        </tr>
-        <tr>
-			<td>
-                <a href='edit?id=1'>
-                    <i class="fa fa-square-o" aria-hidden="true"></i>
-                </a>
-            </td>
-            <td>
-                <a href='edit?id=1'>
-                    <i class="fa fa-edit mr-3"></i>
-                </a>
-            </td>
-            <td>Read the Hibernate Manual Guide</td>
-            <td>21/08/2020</td>
-            <td></td>
-        </tr>
         </tbody>
     </table>
 </div>

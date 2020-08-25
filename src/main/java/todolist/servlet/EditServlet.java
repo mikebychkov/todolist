@@ -8,8 +8,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.GregorianCalendar;
 
 public class EditServlet extends HttpServlet {
+
+    private GregorianCalendar getCurrent() {
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.setTimeInMillis(System.currentTimeMillis());
+        return gc;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,7 +30,13 @@ public class EditServlet extends HttpServlet {
         } else {
             req.setAttribute("item", ItemDB.getItem(Integer.parseInt(id)));
         }
-        req.getRequestDispatcher("edit.jsp").forward(req, resp);
+
+        String check = req.getParameter("check");
+        if ("1".equals(check)) {
+            doPost(req, resp);
+        } else {
+            req.getRequestDispatcher("edit.jsp").forward(req, resp);
+        }
     }
 
     @Override
@@ -33,9 +46,20 @@ public class EditServlet extends HttpServlet {
 
         String id = req.getParameter("id");
         String desc = req.getParameter("desc");
+        String check = req.getParameter("check");
 
         if ("0".equals(id)) {
-            ItemDB.save(new Item(desc));
+            Item item = new Item(desc);
+            item.setCreated(getCurrent());
+            ItemDB.save(item);
+        } else if ("1".equals(check)) {
+            Item item = (Item) req.getAttribute("item");
+            if (item.getDone() == null) {
+                item.setDone(getCurrent());
+            } else {
+                item.setDone(null);
+            }
+            ItemDB.saveOrUpdate(item);
         } else {
             Item item = new Item(Integer.parseInt(id), desc);
             ItemDB.saveOrUpdate(item);

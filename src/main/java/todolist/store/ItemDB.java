@@ -59,4 +59,13 @@ public class ItemDB {
         session.close();
         return result;
     }
+
+    public static List<Item> getActualItemList() {
+        Session session = sf().openSession();
+        session.beginTransaction();
+        List result = session.createQuery("FROM todolist.model.Item WHERE done = null").list();
+        session.getTransaction().commit();
+        session.close();
+        return result;
+    }
 }
