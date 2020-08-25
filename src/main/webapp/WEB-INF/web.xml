@@ -14,6 +14,10 @@
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
 
+  <listener>
+    <listener-class>todolist.servlet.TodoListContextListener</listener-class>
+  </listener>
+  
   <servlet>
     <servlet-name>ItemListServlet</servlet-name>
     <servlet-class>todolist.servlet.ItemListServlet</servlet-class>
