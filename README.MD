@@ -1,0 +1,1 @@
+This small application is example of Servlet MVC web-application with Hibernate used as ORM. 
