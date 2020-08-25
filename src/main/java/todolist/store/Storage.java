@@ -12,12 +12,24 @@ public class Storage {
 
     // HIBERNATE FACTORY
 
+    /*
     private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .configure().build();
     private final SessionFactory sf = new MetadataSources(registry)
             .buildMetadata().buildSessionFactory();
+    */
+
+    private final StandardServiceRegistry registry;
+    private final SessionFactory sf;
 
     private Storage() {
+        System.out.println("Starting Hibernate initializing====================");
+        registry = new StandardServiceRegistryBuilder()
+                .configure().build();
+        System.out.println("Registry is builded====================");
+        sf = new MetadataSources(registry)
+                .buildMetadata().buildSessionFactory();
+        System.out.println("Session factory is builded====================");
     }
 
     private static class Holder {
