@@ -61,7 +61,8 @@ public class EditServlet extends HttpServlet {
             }
             ItemDB.saveOrUpdate(item);
         } else {
-            Item item = new Item(Integer.parseInt(id), desc);
+            Item item = ItemDB.getItem(Integer.parseInt(id));
+            item.setDesc(desc);
             ItemDB.saveOrUpdate(item);
         }
 
