@@ -1,7 +1,6 @@
 package todolist.servlet;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 import todolist.model.BeautyItem;
 import todolist.model.Item;
 import todolist.store.ItemDB;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

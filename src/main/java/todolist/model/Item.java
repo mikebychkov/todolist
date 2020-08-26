@@ -2,6 +2,7 @@ package todolist.model;
 
 import javax.persistence.*;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 @Entity
 @Table(name = "items")
@@ -14,6 +15,10 @@ public class Item {
     private String desc;
     private GregorianCalendar created;
     private GregorianCalendar done;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
 
     public Item() {
     }
@@ -57,5 +62,26 @@ public class Item {
 
     public void setDone(GregorianCalendar done) {
         this.done = done;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return id.equals(item.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

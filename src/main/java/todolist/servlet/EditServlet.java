@@ -1,5 +1,6 @@
 package todolist.servlet;
 
+import todolist.model.Author;
 import todolist.model.Item;
 import todolist.store.ItemDB;
 
@@ -35,7 +36,7 @@ public class EditServlet extends HttpServlet {
         if ("1".equals(check)) {
             doPost(req, resp);
         } else {
-            req.getRequestDispatcher("edit.jsp").forward(req, resp);
+            req.getRequestDispatcher("WEB-INF/templates/edit.jsp").forward(req, resp);
         }
     }
 
@@ -47,10 +48,12 @@ public class EditServlet extends HttpServlet {
         String id = req.getParameter("id");
         String desc = req.getParameter("desc");
         String check = req.getParameter("check");
+        Author author = (Author) req.getSession().getAttribute("author");
 
         if ("0".equals(id)) {
             Item item = new Item(desc);
             item.setCreated(getCurrent());
+            item.setAuthor(author);
             ItemDB.save(item);
         } else if ("1".equals(check)) {
             Item item = (Item) req.getAttribute("item");
@@ -66,6 +69,6 @@ public class EditServlet extends HttpServlet {
             ItemDB.saveOrUpdate(item);
         }
 
-        resp.sendRedirect(req.getContextPath() + "/index.html");
+        resp.sendRedirect(req.getContextPath() + "/index.do");
     }
 }

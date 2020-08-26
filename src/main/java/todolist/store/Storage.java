@@ -6,19 +6,9 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 public class Storage {
 
-    // HIBERNATE FACTORY
-
-    /*
-    private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-            .configure().build();
-    private final SessionFactory sf = new MetadataSources(registry)
-            .buildMetadata().buildSessionFactory();
-    */
+    // HIBERNATE SESSION FACTORY
 
     private final StandardServiceRegistry registry;
     private final SessionFactory sf;

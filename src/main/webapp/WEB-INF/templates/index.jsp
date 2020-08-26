@@ -1,3 +1,5 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,12 +14,12 @@
 
     <script>
 
-        let ActualItems = false;
+        let ActualItems = '';
 
         function updateItemList() {
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost:8080/todolist/itemlist?list=' + (ActualItems ? 'actual' : 'all'),
+                url: 'http://localhost:8080/todolist/itemlist.do?list=' + ActualItems,
                 dataType: 'json'
             }).done(function(data) {
                 let content = "";
@@ -28,7 +30,7 @@
                     //
                     content += "<td>";
 
-                    content += "<a href='edit?id=" + d.id + "&check=1'>";
+                    content += "<a href='edit.do?id=" + d.id + "&check=1'>";
                     if (d.done == "") {
                         content += "<i class=\"fa fa-square-o\" aria-hidden=\"true\"></i>";
                     } else {
@@ -39,12 +41,13 @@
                     content += "</td>";
                     //
                     content += "<td>";
-                    content += "<a href='edit?id=" + d.id + "'>" +
+                    content += "<a href='edit.do?id=" + d.id + "'>" +
                                 "<i class=\"fa fa-edit mr-3\"></i>" +
                                 "</a>"
                     content += "</td>";
                     //
                     content += "<td>" + d.desc + "</td>";
+                    content += "<td>" + d.author + "</td>";
                     content += "<td>" + d.created + "</td>";
                     content += "<td>" + d.done + "</td>";
                     //
@@ -55,7 +58,11 @@
         }
 
         function updateActualFlag() {
-            ActualItems = document.getElementById("actual0").checked;
+            if (document.getElementById("actual0").checked) {
+                ActualItems = 'actual';
+            } else {
+                ActualItems = 'all';
+            }
         }
 
         updateItemList();
@@ -71,7 +78,11 @@
         </div>
         <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
-            <li><a href="edit?id=new">New Item</a></li>
+            <li><a href="<%=request.getContextPath()%>/edit.do?id=new">New Item</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> ${author.name}</a></li>
+            <li><a href="<%=request.getContextPath()%>/auth.do?log=0"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
         </ul>
     </div>
 </nav>
@@ -86,6 +97,7 @@
             <th><i class="fa fa-check-square-o" aria-hidden="true"></i></th>
             <th><i class="fa fa-edit mr-3"></i></th>
             <th>Description</th>
+            <th>Author</th>
             <th>Created</th>
             <th>Done</th>
         </tr>

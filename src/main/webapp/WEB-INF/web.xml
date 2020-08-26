@@ -11,20 +11,38 @@
   <display-name>Archetype Created Web Application</display-name>
 
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.do</welcome-file>
   </welcome-file-list>
 
   <listener>
-    <listener-class>todolist.servlet.TodoListContextListener</listener-class>
+    <listener-class>todolist.listener.TodoListContextListener</listener-class>
   </listener>
-  
+
+  <filter>
+    <filter-name>AuthFilter</filter-name>
+    <filter-class>todolist.filter.AuthFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+
+  <servlet>
+    <servlet-name>IndexServlet</servlet-name>
+    <servlet-class>todolist.servlet.IndexServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IndexServlet</servlet-name>
+    <url-pattern>/index.do</url-pattern>
+  </servlet-mapping>
+
   <servlet>
     <servlet-name>ItemListServlet</servlet-name>
     <servlet-class>todolist.servlet.ItemListServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ItemListServlet</servlet-name>
-    <url-pattern>/itemlist</url-pattern>
+    <url-pattern>/itemlist.do</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -33,8 +51,25 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>EditServlet</servlet-name>
-    <url-pattern>/edit</url-pattern>
+    <url-pattern>/edit.do</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>AuthServlet</servlet-name>
+    <servlet-class>todolist.servlet.AuthServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AuthServlet</servlet-name>
+    <url-pattern>/auth.do</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>RegServlet</servlet-name>
+    <servlet-class>todolist.servlet.RegServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegServlet</servlet-name>
+    <url-pattern>/reg.do</url-pattern>
+  </servlet-mapping>
 
 </web-app>

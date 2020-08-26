@@ -7,20 +7,28 @@ public class BeautyItem {
     private String desc;
     private String created;
     private String done;
+    private String author;
 
     public BeautyItem(Item item) {
         id = item.getId();
         desc = item.getDesc();
         created = getDate(item.getCreated());
         done = getDate(item.getDone());
+        author = getAuthor(item.getAuthor());
     }
 
     private String getDate(GregorianCalendar gc) {
-        String rsl = "";
-        if (gc != null) {
-            rsl = gc.getTime().toString();
+        if (gc == null) {
+            return "";
         }
-        return rsl;
+        return gc.getTime().toString();
+    }
+
+    private String getAuthor(Author author) {
+        if (author == null) {
+            return "";
+        }
+        return author.getName();
     }
 
     public Integer getId() {
@@ -53,5 +61,13 @@ public class BeautyItem {
 
     public void setDone(String done) {
         this.done = done;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

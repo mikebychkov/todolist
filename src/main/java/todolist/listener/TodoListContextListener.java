@@ -1,4 +1,4 @@
-package todolist.servlet;
+package todolist.listener;
 
 import org.hibernate.service.ServiceRegistry;
 import todolist.store.Storage;
