@@ -1,6 +1,8 @@
 package todolist.listener;
 
-import org.hibernate.service.ServiceRegistry;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import todolist.store.Storage;
 
 import javax.servlet.ServletContextEvent;
@@ -8,18 +10,20 @@ import javax.servlet.ServletContextListener;
 
 public class TodoListContextListener implements ServletContextListener {
 
+    private static final Logger logger = LogManager.getLogger(TodoListContextListener.class);
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        System.out.println("ServletContextListener#contextInitialized BEGIN");
+        logger.info("=== contextInitialized === BEGIN ===");
         System.out.println(Storage.getInstance());
-        System.out.println("ServletContextListener#contextInitialized END");
+        logger.info("=== contextInitialized === END ===");
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        System.out.println("TodoListContextListener#contextDestroyed BEGIN");
+        logger.info("=== contextDestroyed === BEGIN ===");
         Storage.getInstance().getSessionFactory().close();
         Storage.getInstance().getServiceRegistry().close();
-        System.out.println("TodoListContextListener#contextDestroyed END");
+        logger.info("=== contextDestroyed === END ===");
     }
 }

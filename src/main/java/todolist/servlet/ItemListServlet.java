@@ -1,6 +1,10 @@
 package todolist.servlet;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import org.json.JSONArray;
+import todolist.listener.TodoListContextListener;
 import todolist.model.BeautyItem;
 import todolist.model.Item;
 import todolist.store.ItemDB;
@@ -16,10 +20,12 @@ import java.util.stream.Collectors;
 
 public class ItemListServlet extends HttpServlet {
 
+    private static final Logger logger = LogManager.getLogger(ItemListServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        System.out.println("ItemListServlet#doGet=========start query=========");
+        logger.debug("=== doGet === start query ===");
 
         String listType = req.getParameter("list");
 
@@ -35,7 +41,7 @@ public class ItemListServlet extends HttpServlet {
 
         resp.setContentType("text/json");
 
-        System.out.println("ItemListServlet#doGet=========write query result into response=========");
+        logger.debug("=== doGet === write query result into response ===");
 
         PrintWriter out = resp.getWriter();
         out.write(jo.toString());

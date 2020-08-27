@@ -1,5 +1,8 @@
 package todolist.servlet;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import todolist.model.Author;
 import todolist.model.Item;
 import todolist.store.ItemDB;
@@ -13,6 +16,11 @@ import java.util.GregorianCalendar;
 
 public class EditServlet extends HttpServlet {
 
+    private static final Logger logger = LogManager.getLogger(EditServlet.class);
+
+    private static final String NEW_USER_ID = "0";
+    private static final String CHECKING_FLAG = "1";
+
     private GregorianCalendar getCurrent() {
         GregorianCalendar gc = new GregorianCalendar();
         gc.setTimeInMillis(System.currentTimeMillis());
@@ -22,7 +30,7 @@ public class EditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        System.out.println("EditServlet#doGet=========");
+        logger.debug("=== doGet ===");
 
         String id = req.getParameter("id");
 
@@ -43,19 +51,19 @@ public class EditServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        System.out.println("EditServlet#doPost=========");
+        logger.debug("=== doPost ===");
 
         String id = req.getParameter("id");
         String desc = req.getParameter("desc");
         String check = req.getParameter("check");
         Author author = (Author) req.getSession().getAttribute("author");
 
-        if ("0".equals(id)) {
+        if (NEW_USER_ID.equals(id)) {
             Item item = new Item(desc);
             item.setCreated(getCurrent());
             item.setAuthor(author);
             ItemDB.save(item);
-        } else if ("1".equals(check)) {
+        } else if (CHECKING_FLAG.equals(check)) {
             Item item = (Item) req.getAttribute("item");
             if (item.getDone() == null) {
                 item.setDone(getCurrent());
